@@ -178,7 +178,7 @@ Otherwise an attacker can identify BIG-IP systems in your network and then [atta
 #### Tools
 * [Metasploit Framework module] (http://www.rapid7.com/db/modules/auxiliary/scanner/http/f5_mgmt_scanner)
 
-#### Remediation ====
+#### Remediation
 
 Connect MGMT interface to special management network only. Management network should operates under private ([RFC 1918] (https://tools.ietf.org/html/rfc1918)) IP-address space that is completely separate from the production network.
  The most secure configuration is to set "Allow None" on all Self IPs and only administer a BIG-IP using the Management Port.
