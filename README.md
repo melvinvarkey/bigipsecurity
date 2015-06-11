@@ -125,7 +125,7 @@ The following example shows a GET request to BIG-IP and a response containing Se
  Set-Cookie: MRHSHint=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/
 ```
 #### Tools
-* [Metasploit Framework mdule] (http://www.rapid7.com/db/modules/auxiliary/scanner/http/f5_bigip_virtual_server)
+* [Metasploit Framework module] (http://www.rapid7.com/db/modules/auxiliary/scanner/http/f5_bigip_virtual_server)
 
 #### Remediation
 
