@@ -136,7 +136,7 @@ It is recommended to remove `Server` header from HTTP responses.
 1. Log in to the Configuration utility.
 2. Navigate `Local Traffic > Profiles > Services > HTTP`.
 3. Create new secure HTTP profile.
-4. Enter empry string in `Server Agent Name` field.
+4. Enter empty string in `Server Agent Name` field.
 5. Click on `Finished` button.
 6. Assign created HTTP profile to virtual server.
 
