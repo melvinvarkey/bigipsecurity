@@ -340,11 +340,18 @@ modify /apm profile access <profile_name> generation-action increment
 save /sys config
 ```
 
-## References
+## Getting an "A" grade on Qualys's SSL Labs
 
+It is necessary to configure the following settings in BigIP's client SSL profile
+* Enable TLS_FALLBACK-SCSV extension
+* Enable HSTS
+* Prioritize PFS ciphers
+
+## References
 * [F5 Networks Official Site] (https://f5.com/products/big-ip)
 * [BIG-IP Modules Datasheet](https://www.f5.com/pdf/products/big-ip-modules-ds.pdf)
 * [David Holmes. 10 Settings to Lock Down your BIG-IP] (https://devcentral.f5.com/articles/10-settings-to-lock-down-your-big-ip)
 * [SOL13092: Overview of securing access to the BIG-IP system](https://support.f5.com/kb/en-us/solutions/public/13000/000/sol13092.html)
 * [SOL13309: Restricting access to the Configuration utility by source IP address](https://support.f5.com/kb/en-us/solutions/public/13000/300/sol13309.html)
+* [F5 TLS & SSL Practices](http://www.slideshare.net/bamchenry/f5-tls-ssl-practices)
 * [OWASP Secure Configuration Guide: BigIP] (https://www.owasp.org/index.php/SCG_D_BIGIP)
