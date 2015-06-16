@@ -55,14 +55,14 @@ Besides, an attacker detects that BIG-IP system is used in network infrustructur
 5. Inspect suffix of BIGipServer cookie name and verify that it does not contain any sensitive information about network infrustructure.
 
 The following example shows a GET request to BIG-IP with LTM module and a response containing BIGipServer cookie.
-```
+ ```
 GET /app HTTP/1.1
 Host: x.x.x.x
-```
-```
+ ```
+ ```
 HTTP/1.1 200 OK
 Set-Cookie: BIGipServerOldOWASSL=110536896.20480.0000; path=/
-```
+ ```
 Here we can see that backend's pool has the meaningful name OldOWASSL and includes backend server 192.168.150.6:80
 
 #### Tools
@@ -84,14 +84,14 @@ Here we can see that backend's pool has the meaningful name OldOWASSL and includ
 
 ##### Configuring cookie persistence in the TMSH
 
-```
+ ```
 create ltm persistense cookie <profile_name>
 modify ltm persistense cookie <profile_name> cookie-name <secure_cookie_name>
 modify ltm persistense cookie <profile_name> cookie-encryption required
 modify ltm persistense cookie <profile_name> cookie-encryption-passphrase <secure_passphrase>
 modify ltm virtual <virtual_server> persist replace-all-with { <profile_name> }
 save /sys config
-```
+ ```
 
 ### BIG-IP HTTP Server header information leakage
 
@@ -110,11 +110,11 @@ An attacker can detect that BIG-IP is used in network infrustructure and then kn
 3. If Server header contains `BIG-IP` or `BigIP` value then BIG-IP is used.
 
 The following example shows a GET request to BIG-IP and a response containing Server header inserted by BIG-IP LTM.
-```
+ ```
  GET / HTTP/1.1
  Host: x.x.x.x
-```
-```
+ ```
+ ```
  HTTP/1.0 302 Found
  Server: BigIP
  Connection: Close
@@ -123,7 +123,7 @@ The following example shows a GET request to BIG-IP and a response containing Se
  Set-Cookie: LastMRH_Session=05da1fc5;path=/;secure
  Set-Cookie: MRHSession=03e47713f1a8ef1aaa71cd9d05da1fc5;path=/;secure
  Set-Cookie: MRHSHint=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/
-```
+ ```
 #### Tools
 * [Metasploit Framework module] (http://www.rapid7.com/db/modules/auxiliary/scanner/http/f5_bigip_virtual_server)
 
@@ -141,11 +141,11 @@ It is recommended to remove `Server` header from HTTP responses.
 6. Assign created HTTP profile to virtual server.
 
 ##### Removing Server header in TMSH
-```
+ ```
 create ltm profile http <profile_name>
 modify ltm profile http <profile_name> server-agent-name none
 save /sys config
-```
+ ```
 
 ### Administrative access to BIG-IP system via Internet
 
@@ -192,11 +192,11 @@ Access to individual ports can be selectively enabled, but this is not recommend
 If you need to administer BIG-IP using Self IPs you should also use private [RFC 1918] (https://tools.ietf.org/html/rfc1918) IP-address space.
 The most unsecure configuation is to use routable addresses on your Self-IPs. In this case it is highly recommended to lock down access to the networks that need it. To lock-down SSH and the GUI for a Self IP from a specific network.
 For examle, to permit access from network 192.268.2.0/24 it is necessary to perform the following commands in TMSH:
-```
+ ```
 modify /sys sshd allow replace-all-with { 192.168.2.* }
 modify /sys httpd allow replace-all-with { 192.168.2.* }
 save /sys config
-```
+ ```
 
 ### Protection against HTTP host header attacks
 #### Description
@@ -245,7 +245,8 @@ The following settings ensures that user will be redirected to `/vdesk/hangup.ph
 
 ##### Configuring host validation in CPM in the TMSH
 1. Prepare the following CPM config for host validation
-```
+
+ ```
 ltm policy _http_host_validation {
     requires { http }
     rules {
@@ -270,17 +271,21 @@ ltm policy _http_host_validation {
     }
     strategy first-match
 }
-```
+ ```
+ 
 2. Log in to TMSH.
 3. Run the following command:
-```
+
+ ```
 load sys config from terminal merge
-```
+ ```
+ 
 4. Copy the config and press CTL-D to submit.
 5. Run the following command:
-```
+ 
+ ```
 modify ltm virtual <virtual_server> policies add { _http_host_validation }
-```
+ ```
 
 ### Protection against mass enumeration via search engines
 
@@ -334,11 +339,11 @@ The default recommendation is to set value of `Max In Progress Sessions Per Clie
 4. Click on `Update` button and then click on `Apply Access policy` for `<profile_name>`.
 
 ##### Protection settings in the TMSH
-```
+ ```
 modify apm profile access <profile_name> max-in-progress-sessions 128
 modify /apm profile access <profile_name> generation-action increment
 save /sys config
-```
+ ```
 
 ## Getting an "A" grade on Qualys's SSL Labs
 
@@ -346,6 +351,32 @@ It is necessary to configure the following settings in BigIP's client SSL profil
 * Enable TLS_FALLBACK-SCSV extension
 * Enable HSTS
 * Prioritize PFS ciphers
+
+### Enabling Strict Transport Security
+
+#### Enabling HSTS via SSL Profile
+
+1. Log in to the Configuration utility.
+2. Navigate `Local Traffic > Profiles > Services > HTTP`.
+3. Choose existent or create a new HTTP profile.
+4. Select `Mode` and `Include Subdomains` in the `HTTP Strict Transport Security` section.
+5. Click on `Update` button.
+
+#### Enabling HSTS via iRules
+
+1. Log in to the Configuration utility.
+2. Navigate `Local Traffic > iRules`.
+3. Create the following new iRue:
+
+ ```
+### iRule for HSTS HTTPS Virtuals ###
+
+when HTTP_RESPONSE {
+     HTTP::header insert Strict-Transport-Security "max-age=31536000; includeSubDomains"
+}
+ ```
+4. Assign the iRule to a HTTPS virtual server.
+
 
 ## References
 * [F5 Networks Official Site] (https://f5.com/products/big-ip)
