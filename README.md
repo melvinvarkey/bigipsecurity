@@ -353,6 +353,7 @@ It is necessary to configure the following settings in BigIP's client SSL profil
 * Prioritize PFS ciphers
 
 ### Enabling Strict Transport Security
+There are several ways for implementing HSTS on BigIP: HTTP profile and iRules.
 
 #### Enabling HSTS via SSL Profile
 
@@ -372,7 +373,7 @@ It is necessary to configure the following settings in BigIP's client SSL profil
 ### iRule for HSTS HTTPS Virtuals ###
 
 when HTTP_RESPONSE {
-     HTTP::header insert Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  HTTP::header insert Strict-Transport-Security "max-age=31536000; includeSubDomains"
 }
  ```
 4. Assign the iRule to a HTTPS virtual server.
