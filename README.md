@@ -378,6 +378,22 @@ when HTTP_RESPONSE {
  ```
 4. Assign the iRule to a HTTPS virtual server.
 
+### Configuring ciphersuites
+
+There are many different cipher strings that prioritize PFS ciphers and can provide forward secrecy. On of them is the following:
+
+```
+ECDHE+AES-GCM:ECDHE+AES:DEFAULT:!DHE:!RC4:!MD5:!EXPORT:!LOW:!SSLv2
+```
+
+
+#### Configuring ciphers via SSL profile
+
+1. Log in to the Configuration utility.
+2. Navigate `Local Traffic > Profiles > SSL > Client`.
+3. Choose existent or create a new cleint SSL profile.
+4. Choose `Advanced` configuration mode. Input your cipher string in `Cipher` option.
+5. Click on `Update` button.
 
 ## References
 * [F5 Networks Official Site] (https://f5.com/products/big-ip)
