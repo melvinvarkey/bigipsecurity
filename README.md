@@ -72,17 +72,17 @@ Here we can see that backend's pool has the meaningful name OldOWASSL and includ
 
 #### Remediation
 
-##### Configuring secure cookie persistence by using the Configuration utility
+##### Configuring secure cookie persistence using the Configuration utility
 
 1. Log in to the Configuration utility.
-2. Navigate `Local Traffic > Profiles > Persistence`.
-3. Create new secure persistence profile with persistence type equals to `Cookie`.
+2. Go to `Local Traffic > Profiles > Persistence`.
+3. Create a new secure persistence profile with persistence type equals to `Cookie`.
 4. Check the custom box for `Cookie Name` and enter a cookie name that does not conflict with any existing cookie names.
 5. Check the custom box for `Cookie Encryption Use Policy` and choose a `required` option. Enter a passphrase in `Encryption Passphrase` field.
-6. Click on `Finished` button.
-7. Assign created persistence profile to virtual server.
+6. Click `Finished`.
+7. Assign created persistence profile to the virtual server.
 
-##### Configuring cookie persistence in the TMSH
+##### Configuring secure cookie persistence using TMSH
 
  ```
 create ltm persistense cookie <profile_name>
@@ -131,16 +131,16 @@ The following example shows a GET request to BIG-IP and a response containing Se
 
 It is recommended to remove `Server` header from HTTP responses.
 
-##### Removing Server header via Configuration Utility
+##### Removing Server header using the Configuration Utility
 
 1. Log in to the Configuration utility.
-2. Navigate `Local Traffic > Profiles > Services > HTTP`.
+2. Go to `Local Traffic > Profiles > Services > HTTP`.
 3. Create new secure HTTP profile.
 4. Enter empty string in `Server Agent Name` field.
-5. Click on `Finished` button.
-6. Assign created HTTP profile to virtual server.
+5. Click `Finished`.
+6. Assign created HTTP profile to the virtual server.
 
-##### Removing Server header in TMSH
+##### Removing Server header using TMSH
  ```
 create ltm profile http <profile_name>
 modify ltm profile http <profile_name> server-agent-name none
@@ -182,12 +182,13 @@ Otherwise an attacker can identify BIG-IP systems in your network and then [atta
 
 Connect MGMT interface to special management network only. Management network should operates under private ([RFC 1918] (https://tools.ietf.org/html/rfc1918)) IP-address space that is completely separate from the production network.
  The most secure configuration is to set "Allow None" on all Self IPs and only administer a BIG-IP using the Management Port.
-Setting "Allow None" on each Self IP will block all access to BIG-IP's administrative IP addresses except for the Management Port.
-Access to individual ports can be selectively enabled, but this is not recommended in a highly secure environment.
+Setting "Allow None" on each Self IP will block all access to BIG-IP's administrative IP addresses except for the Management Port. Access to individual ports can be selectively enabled, but this is not recommended in a highly secure environment.
+
+To deny all connections on the self IP addresses using the Configuration utility
 1. Log in to the Configuration utility.
-2. Navigate `Network > Self IPs`.
+2. Go to `Network > Self IPs`.
 3. For all self IPs set `Port Lockdown` option to `Allow None`.
-4. Click on `Update` button.
+4. Click `Update`.
 
 If you need to administer BIG-IP using Self IPs you should also use private [RFC 1918] (https://tools.ietf.org/html/rfc1918) IP-address space.
 The most unsecure configuation is to use routable addresses on your Self-IPs. In this case it is highly recommended to lock down access to the networks that need it. To lock-down SSH and the GUI for a Self IP from a specific network.
@@ -199,6 +200,7 @@ save /sys config
  ```
 
 ### Protection against HTTP host header attacks
+
 #### Description
 
 Host header in HTTP requests is not always validated by BIG-IP systems by default.
@@ -218,12 +220,12 @@ BIG-IP systems can be protected against HTTP host header attacks using Centraliz
 Let's consider an example of configuration BIG-IP system with LTM and APM modules that illustrates the main idea of this protection.
 The following settings ensures that user will be redirected to `/vdesk/hangup.php3` script deleting a user's session if HTTP Host header contains a value different from permitted and correct hostnames.
 
-##### Configuring host validation in CPM by using the Configuration utility
+##### Configuring host validation in CPM using the Configuration utility
 
 1. Log in to the Configuration utility.
 2. Navigate `Local Traffic > Policies`.
-3. Click on `Create` button. Input `_host_header_validation` in Name field. Add `http` to Requires box.
-4. Click on `Add` button in Rules section.
+3. Click `Create`. Input `_host_header_validation` in the `Name` field. Add `http` to Requires box.
+4. Click `Add` in Rules section.
 5. Add the following Condition:
   * Operand: `http-host`
   * Event: `request`
@@ -231,7 +233,7 @@ The following settings ensures that user will be redirected to `/vdesk/hangup.ph
   * Negotiate: `not`
   * Condition: `equals`
   * Values: `<dns_name_1>`, `<dns_name_2>`, `<dns_name_3>`, etc
-6. Click on "Add" button.
+6. Click `Add`.
 7. Add the following Rule:
   * Target: `http-uri`
   * Event: `request`
@@ -239,11 +241,10 @@ The following settings ensures that user will be redirected to `/vdesk/hangup.ph
   * Parameters
     * Name: `path`
     * Value: `/vdesk/hangup.php3`
-8. Navigate to `Local Traffic > Virtual Servers`. Choose a virtual server that should be protected by CPM.
-9. Click on Resources. Click on `Manage` button for Policies and add `_http_host_validation` to `Enabled` box.
+8. Go to `Local Traffic > Virtual Servers`. Choose a virtual server that should be protected by CPM and click `Resources`.  9. Click `Manage` in `Policies` section and add `_http_host_validation` to `Enabled` box.
 10. Click `Finished`.
 
-##### Configuring host validation in CPM in the TMSH
+##### Configuring host validation in CPM using TMSH
 1. Prepare the following CPM config for host validation
 
  ```
@@ -280,7 +281,7 @@ ltm policy _http_host_validation {
 load sys config from terminal merge
  ```
  
-4. Copy the config and press CTL-D to submit.
+4. Copy the config and press `CTL-D` to submit.
 5. Run the following command:
  
  ```
@@ -301,15 +302,17 @@ Try to use the following search queries with BIG-IP keyword in [Google] (https:/
 BIG-IP systems can be protected against web enumeration using Customization mechanism.
 
 1. Log in to the Configuration utility.
-2. Navigate `Access Policy > Customization > General`. Change all `BIG-IP` substrings to some neutral strings.
-3. Navigate `Access Policy > Customization > Advanced`. Change strings with `BIG-IP` values.
+2. Go to `Access Policy > Customization > General`.
+3. Change all `BIG-IP` substrings to some neutral strings.
+3. Go to `Access Policy > Customization > Advanced`.
+4. Change strings with `BIG-IP` values.
 
 For example, navigate to the `Customization Settings > Access profiles > /Common/<profile_name> > Logout > logout.inc`.
 Change `<title>BIG-IP logout page</title>` to `<title>Logout page</title>`.
 
-#### Protection against APM session exhaustion DoS attack
+### Protection against APM session exhaustion DoS attack
 
-##### Description
+#### Description
 
 An unauthenticated attacker can establish multiple connections with BigIP Access Policy Manager and exhaust all available sessions defined in customer's license.
 In the first step of BigIP APM protocol the client sends a HTTP request to virtual server with access profile (/).
@@ -320,7 +323,7 @@ New versions of BigIP system has secure configuration by default and they are no
 #### Testing
 
 1. Log in to the Configuration utility.
-2. Navigate `Access Policy > Access Profiles > <profile_name>`.
+2. Go to `Access Policy > Access Profiles > <profile_name>`.
 3. Review `Max In Progress Sessions Per Client IP` setting.
 4. If `Max In Progress Sessions Per Client IP` value is equal to 0 then the BigIP system is vulnerable to this attack.
 
@@ -336,7 +339,7 @@ The default recommendation is to set value of `Max In Progress Sessions Per Clie
 1. Log in to the Configuration utility.
 2. Navigate `Access Policy > Access Profiles > <profile_name>`.
 3. Set `Max In Progress Sessions Per Client IP` value to 128.
-4. Click on `Update` button and then click on `Apply Access policy` for `<profile_name>`.
+4. Click `Update` and then click `Apply Access Policy`.
 
 ##### Protection settings in the TMSH
  ```
@@ -344,6 +347,27 @@ modify apm profile access <profile_name> max-in-progress-sessions 128
 modify /apm profile access <profile_name> generation-action increment
 save /sys config
  ```
+ 
+### Protection against Brute-force Passwords Attack
+ 
+#### Description
+By default, BigIP APM with any type of AAA is vulnerable to brute-force password attack.
+
+#### Remediation
+The `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options or CAPTCHA can be enabled to slow down or mitigate brute-force passwords attacks against BIG-IP APM
+
+To enable `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options using the Configuration utility
+1. Log in to the Configuration utility.
+2. Go to `Access Policy > Access Profiles`. Click a profile name.
+3. Enable `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options and change their values if necessary.
+4. Click `Update` and then click `Apply Access Policy`.
+
+To enable CAPTCHA using the Configuration utility
+1. Log in to the Configuration utility.
+2. Go to `Access Policy > CAPTCHA Configurations` and create a new one.
+3. Go to `Access Policy > Access Profiles`. Click `Edit` link for the profile name.
+4. Click `Logon Page`. Set the created CAPTCHA configuration.
+5. Click `Apply Access Policy`.
 
 ## Getting an "A" grade on Qualys's SSL Labs
 
