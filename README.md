@@ -357,12 +357,14 @@ By default, BigIP APM with any type of AAA is vulnerable to brute-force password
 The `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options or CAPTCHA can be enabled to slow down or mitigate brute-force passwords attacks against BIG-IP APM
 
 To enable `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options using the Configuration utility
+
 1. Log in to the Configuration utility.
 2. Go to `Access Policy > Access Profiles`. Click a profile name.
 3. Enable `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options and change their values if necessary.
 4. Click `Update` and then click `Apply Access Policy`.
 
 To enable CAPTCHA using the Configuration utility
+
 1. Log in to the Configuration utility.
 2. Go to `Access Policy > CAPTCHA Configurations` and create a new one.
 3. Go to `Access Policy > Access Profiles`. Click `Edit` link for the profile name.
