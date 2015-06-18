@@ -381,19 +381,19 @@ It is necessary to configure the following settings in BigIP's client SSL profil
 ### Enabling Strict Transport Security
 There are several ways for implementing HSTS on BigIP: HTTP profile and iRules.
 
-#### Enabling HSTS via SSL Profile
+#### Enabling HSTS using SSL Profile
 
 1. Log in to the Configuration utility.
-2. Navigate `Local Traffic > Profiles > Services > HTTP`.
+2. Go to `Local Traffic > Profiles > Services > HTTP`.
 3. Choose existent or create a new HTTP profile.
 4. Select `Mode` and `Include Subdomains` in the `HTTP Strict Transport Security` section.
-5. Click on `Update` button.
+5. Click `Update`.
 
-#### Enabling HSTS via iRules
+#### Enabling HSTS using iRules
 
 1. Log in to the Configuration utility.
-2. Navigate `Local Traffic > iRules`.
-3. Create the following new iRue:
+2. Go to `Local Traffic > iRules`.
+3. Create a new iRule:
 
  ```
 ### iRule for HSTS HTTPS Virtuals ###
@@ -402,7 +402,7 @@ when HTTP_RESPONSE {
   HTTP::header insert Strict-Transport-Security "max-age=31536000; includeSubDomains"
 }
  ```
-4. Assign the iRule to a HTTPS virtual server.
+4. Assign the iRule to the HTTPS virtual server.
 
 ### Configuring ciphersuites
 
@@ -412,14 +412,13 @@ There are many different cipher strings that prioritize PFS ciphers and can prov
 ECDHE+AES-GCM:ECDHE+AES:DEFAULT:!DHE:!RC4:!MD5:!EXPORT:!LOW:!SSLv2
 ```
 
-
-#### Configuring ciphers via SSL profile
+#### Configuring ciphers using SSL profile
 
 1. Log in to the Configuration utility.
-2. Navigate `Local Traffic > Profiles > SSL > Client`.
-3. Choose existent or create a new cleint SSL profile.
-4. Choose `Advanced` configuration mode. Input your cipher string in `Cipher` option.
-5. Click on `Update` button.
+2. Go to `Local Traffic > Profiles > SSL > Client`.
+3. Choose the existent or create a new cleint SSL profile.
+4. Choose `Advanced` configuration mode. Input your cipher string in the `Cipher` option.
+5. Click `Update`.
 
 ## References
 * [F5 Networks Official Site] (https://f5.com/products/big-ip)
