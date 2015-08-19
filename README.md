@@ -383,7 +383,7 @@ To enable CAPTCHA using the Configuration utility
 4. Click `Logon Page`. Set the created CAPTCHA configuration.
 5. Click `Apply Access Policy`.
 
-## Getting an "A" grade on Qualys's SSL Labs
+## Getting an A-grade on Qualys's SSL Labs
 
 It is necessary to configure the following settings in BigIP's client SSL profile
 * Enable TLS_FALLBACK-SCSV extension
