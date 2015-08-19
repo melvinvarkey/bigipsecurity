@@ -8,11 +8,10 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems.
   - [Persistence Cookie Information Leakage](#persistence-cookie-information-leakage)
   - [HTTP Server Header Information Leakage](#http-server-header-information-leakage)
   - [Access to management intarface from Internet](#access-to-management-interface-from-internet)
-  - [Protection against HTTP host header attacks](#host-header-attacks)
-  - [Configuring host validation in CPM using the Configuration utility](#cpm-host-validation)
-  - [Protection against mass enumeration via search engines](#search-engines)
-  - [Protection against APM session exhaustion DoS attack](#apm-dos)
-  - [Protection against Brute-force Passwords Attack](#brute-force)
+  - [HTTP host header attacks](#http-host-header-attacks)
+  - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
+  - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
+  - [APM Brute-force Passwords Attack](#apm-brute-force-pasword-attack)
 - [Getting an "A" grade on Qualys's SSL Labs](#ssllab-a)
  
 ## Summary
@@ -106,7 +105,7 @@ modify ltm virtual <virtual_server> persist replace-all-with { <profile_name> }
 save /sys config
  ```
 
-### Server Header Information Leakage
+### HTTP Server Header Information Leakage
 
 #### Description
 
@@ -212,7 +211,7 @@ modify /sys httpd allow replace-all-with { 192.168.2.* }
 save /sys config
  ```
 
-### Protection against HTTP host header attacks
+### HTTP Host Header Attacks
 
 #### Description
 
@@ -301,7 +300,7 @@ load sys config from terminal merge
 modify ltm virtual <virtual_server> policies add { _http_host_validation }
  ```
 
-### Protection against mass enumeration via search engines
+### Mass Enumeration using Search Engines
 
 #### Description
 Web-based components of BIG-IP systems, such as APM, use different HTML pages with default values that can be used for mass enumeration.
@@ -323,7 +322,7 @@ BIG-IP systems can be protected against web enumeration using Customization mech
 For example, navigate to the `Customization Settings > Access profiles > /Common/<profile_name> > Logout > logout.inc`.
 Change `<title>BIG-IP logout page</title>` to `<title>Logout page</title>`.
 
-### Protection against APM session exhaustion DoS attack
+### APM Session Exhaustion DoS Attack
 
 #### Description
 
@@ -361,7 +360,7 @@ modify /apm profile access <profile_name> generation-action increment
 save /sys config
  ```
  
-### Protection against Brute-force Passwords Attack
+### APM Brute-force Passwords Attack
  
 #### Description
 By default, BigIP APM with any type of AAA is vulnerable to brute-force password attack.
