@@ -1,11 +1,11 @@
-# BigIP Security Cheatsheet
+# F5 BIG-IP Security Cheatsheet
 
-This document describes common misconfigurations of F5 Networks BigIP systems.
+This document describes common misconfigurations of F5 Networks BIG-IP systems.
 
 ## Table of Contents
 - [Summary](#summary)
 - [Common Misconfigurations](#common-misconfigurations)
-  - [BIG-IP persistence cookie information leakage](#persistence-cookie-information-leakage)
+  - [BIG-IP persistence cookie information leakage](#BIG-IP-persistence-cookie-information-leakage)
   - [BIG-IP HTTP Server header information leakage](#server-header-leakage)
   - [Administrative access to BIG-IP system via Internet](#mgmt)
   - [Protection against HTTP host header attacks](#host-header-attacks)
