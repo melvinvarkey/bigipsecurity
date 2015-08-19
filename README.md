@@ -12,7 +12,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems.
   - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
   - [APM Brute-force Passwords Attack](#apm-brute-force-passwords-attack)
-- [Getting an "A" grade on Qualys's SSL Labs](#ssllab-a)
+- [Getting an A-grade on Qualys's SSL Labs](#getting-an-a-grade-on-qualys's-ssl-labs)
  
 ## Summary
 The BIG-IP family of products offers the application intelligence network managers need to ensure applications are fast, secure and available.
