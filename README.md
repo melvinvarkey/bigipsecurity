@@ -11,7 +11,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems.
   - [HTTP host header attacks](#http-host-header-attacks)
   - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
-  - [APM Brute-force Passwords Attack](#apm-brute-force-pasword-attack)
+  - [APM Brute-force Passwords Attack](#apm-brute-force-paswords-attack)
 - [Getting an "A" grade on Qualys's SSL Labs](#ssllab-a)
  
 ## Summary
