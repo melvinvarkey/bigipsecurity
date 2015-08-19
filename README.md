@@ -3,7 +3,7 @@
 This document describes common misconfigurations of F5 Networks BigIP systems.
 
 ## Table of Contents
-- [GitHub](#github)
+- [Summary](#summary)
 - [Common Misconfigurations](#common-misconfigurations)
   - [BIG-IP persistence cookie information leakage](#persistence-cookie-information-leakage)
   - [BIG-IP HTTP Server header information leakage](#server-header-leakage)
