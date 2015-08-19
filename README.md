@@ -12,7 +12,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems.
   - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
   - [APM Brute-force Passwords Attack](#apm-brute-force-passwords-attack)
-- [Getting an A-grade on Qualys's SSL Labs](#getting-an-a-grade-on-qualys's-ssl-labs)
+- [Getting an A-grade on Qualys SSL Labs](#getting-an-a-grade-on-qualys-ssl-labs)
  
 ## Summary
 The BIG-IP family of products offers the application intelligence network managers need to ensure applications are fast, secure and available.
@@ -383,7 +383,7 @@ To enable CAPTCHA using the Configuration utility
 4. Click `Logon Page`. Set the created CAPTCHA configuration.
 5. Click `Apply Access Policy`.
 
-## Getting an A-grade on Qualys's SSL Labs
+## Getting an A-grade on Qualys SSL Labs
 
 It is necessary to configure the following settings in BigIP's client SSL profile
 * Enable TLS_FALLBACK-SCSV extension
