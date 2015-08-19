@@ -13,18 +13,8 @@ This document describes common misconfigurations of F5 Networks BigIP systems.
   - [Protection against mass enumeration via search engines](#search-engines)
   - [Protection against APM session exhaustion DoS attack](#apm-dos)
   - [Protection against Brute-force Passwords Attack](#brute-force)
-  - [Getting an "A" grade on Qualys's SSL Labs](#ssllab-a)
-  - [Git Query](#git-query)
-  - [Git Grep](#git-grep)
-  - [Merged Branches](#merged-branches)
-  - [Fixup and Autosquash](#fixup-and-autosquash)
-  - [Web Server for Browsing Local Repositories](#web-server-for-browsing-local-repositories)
-  - [Git Configurations](#git-configurations)
-    - [Aliases](#aliases)
-    - [Auto-Correct](#auto-correct)
-    - [Color](#color)
-  - [Git Resources](#git-resources)
-    - [Git Books](#git-books)
+- [Getting an "A" grade on Qualys's SSL Labs](#ssllab-a)
+ 
 ## Summary
 The BIG-IP family of products offers the application intelligence network managers need to ensure applications are fast, secure and available.
 All BIG-IP products share a common underlying architecture, F5's Traffic Management Operating System (TMOS), which provides unified intelligence, flexibility and programmability.
