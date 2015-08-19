@@ -33,7 +33,7 @@ The following modules are currently available for the BIG-IP systems:
 
 ## Common Misconfigurations
 
-### BIG-IP persistence cookie information leakage
+### Persistence Cookie Information Leakage
 
 #### Description
 
@@ -106,7 +106,7 @@ modify ltm virtual <virtual_server> persist replace-all-with { <profile_name> }
 save /sys config
  ```
 
-### BIG-IP HTTP Server header information leakage
+### Server Header Information Leakage
 
 #### Description
 
@@ -160,7 +160,7 @@ modify ltm profile http <profile_name> server-agent-name none
 save /sys config
  ```
 
-### Administrative access to BIG-IP system via Internet
+### Access to management interface from Internet
 
 #### Description
 An attacker can access to BIG-IP management interface via Internet.
