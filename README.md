@@ -5,9 +5,9 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems.
 ## Table of Contents
 - [Summary](#summary)
 - [Common Misconfigurations](#common-misconfigurations)
-  - [BIG-IP persistence cookie information leakage](#BIG-IP-persistence-cookie-information-leakage)
-  - [BIG-IP HTTP Server header information leakage](#server-header-leakage)
-  - [Administrative access to BIG-IP system via Internet](#mgmt)
+  - [Persistence cookie information leakage](#persistence-cookie-information-leakage)
+  - [HTTP Server header information leakage](#http-server-header-information-leakage)
+  - [Access to management intarface from Internet](#access-to-management-interface-from-internet)
   - [Protection against HTTP host header attacks](#host-header-attacks)
   - [Configuring host validation in CPM using the Configuration utility](#cpm-host-validation)
   - [Protection against mass enumeration via search engines](#search-engines)
