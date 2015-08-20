@@ -195,6 +195,7 @@ The most secure configuration is to set "Allow None" on all Self IPs and only ad
 Setting "Allow None" on each Self IP will block all access to BIG-IP's administrative IP addresses except for the Management Port. Access to individual ports can be selectively enabled, but this is not recommended in a highly secure environment.
 
 To deny all connections on the self IP addresses using the Configuration utility
+
 1. Log in to the Configuration utility.
 2. Go to `Network > Self IPs`.
 3. For all self IPs set `Port Lockdown` option to `Allow None`.
