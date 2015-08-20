@@ -158,7 +158,7 @@ modify ltm profile http <profile_name> server-agent-name none
 save /sys config
  ```
 
-### Access to management interface from Internet
+### Access to Management Interface from Internet
 
 #### Description
 If an attacker can access to BIG-IP management interface from Internet  this can lead to different attacks on BIG-IP administrative tools, unauthorized access or mass enumeration of BIG-IP systems using search engines. 
