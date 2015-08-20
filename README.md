@@ -1,6 +1,6 @@
 # F5 BIG-IP Security Cheatsheet
 
-This document describes common misconfigurations of F5 Networks BIG-IP systems.
+This document describes common misconfigurations of F5 Networks BIG-IP systems and their elimination. Some settings can be different for different BIG-IP versions.  
 
 ## Table of Contents
 - [Summary](#summary)
@@ -36,11 +36,11 @@ The following modules are currently available for the BIG-IP systems:
 
 #### Description
 
-An attacker can receive sensitive information about internal network via BIG-IP LTM persistence cookie.  
+An attacker can get some sensitive information about internal network stored in BIG-IP LTM persistence cookie.  
 
 To implement persistence sessions BIG-IP system inserts a cookie into the HTTP response,
 which well-behaved clients include in subsequent HTTP requests for the host name until the cookie expires.
-The cookie, by default, is named `BIGipServer<pool_name>`. The cookie is set to expire based on the time-out configured in the persistence profile.
+The cookie name, by default, contains `BIGipServer` string and configured name of virtual servers pool. The cookie is set to expire based on the time-out configured in the persistence profile.
 The cookie value contains the encoded IP address and port of the destination server in one of the following [format](https://support.f5.com/kb/en-us/solutions/public/6000/900/sol6917.html):
 * IPv4 pool members: `BIGipServer<pool name> = <The encoded server IP>.<The encoded server port>.0000`
 * IPv6 pool members: `BIGipServer<pool name> = vi<The full hexadecimal IPv6 address>.<The port number calculated in the same way as for IPv4 pool members>`
@@ -53,10 +53,9 @@ Examples:
 * `BIGipServer~EE_ORACLE=rd5o00000000000000000000ffffc0000201o80`
 * `BIGipServer~ES~test.example.com=rd3o20010112000000000000000000000030o80`
 
-After decoding of the BIG-IP persistence cookie value an attacker can receive an internal IP address, port number, and routed domain for backend servers.
-In some cases an attacker can also retreive sensitive informaion via `<pool_name>` suffix of the cookie name.
-For example, if an administrator give meaningful name to server pool (e.g. Sharepoint, 10.1.1.0, AD_prod) an attacker will get some additional information about network.
-Besides, an attacker detects that BIG-IP system is used in network infrustructure.
+After decoding of the BIG-IP persistence cookie value an attacker can get an internal IP address, port number, and routed domain for backend servers.
+In some cases an attacker can also get sensitive informaion recorded in `<pool_name>` suffix of the cookie name.
+For example, if an administrator give meaningful name to server pool (e.g., Sharepoint, 10.1.1.0, AD_prod) an attacker will get some additional information about network. Besides, an attacker detects that BIG-IP system is used in network infrustructure.
 
 #### Testing
 
@@ -66,10 +65,10 @@ Besides, an attacker detects that BIG-IP system is used in network infrustructur
 4. Try to decode this value using available tools (see below).
 5. Inspect suffix of BIGipServer cookie name and verify that it does not contain any sensitive information about network infrustructure.
 
-The following example shows a GET request to BIG-IP with LTM module and a response containing BIGipServer cookie.
+The following example shows a GET request to BIG-IP and its response:
  ```
 GET /app HTTP/1.1
-Host: x.x.x.x
+Host: example.com
  ```
  ```
 HTTP/1.1 200 OK
@@ -78,9 +77,9 @@ Set-Cookie: BIGipServerOldOWASSL=110536896.20480.0000; path=/
 Here we can see that backend's pool has the meaningful name OldOWASSL and includes backend server 192.168.150.6:80
 
 #### Tools
-* [Metasploit Framework module] (http://www.rapid7.com/db/modules/auxiliary/gather/f5_bigip_cookie_disclosure)
-* [Burp Suite extension] (http://professionallyevil.com/subdomains/extensions/Burp-F5Cookie-Extension.py.zip)
-* [BeEF module] (https://github.com/beefproject/beef/tree/master/modules/network/ADC/f5_bigip_cookie_disclosure)
+* [Metasploit Framework Module] (http://www.rapid7.com/db/modules/auxiliary/gather/f5_bigip_cookie_disclosure)
+* [Burp Suite Extension] (http://professionallyevil.com/subdomains/extensions/Burp-F5Cookie-Extension.py.zip)
+* [BeEF Module] (https://github.com/beefproject/beef/tree/master/modules/network/ADC/f5_bigip_cookie_disclosure)
 
 #### Remediation
 
@@ -90,9 +89,9 @@ Here we can see that backend's pool has the meaningful name OldOWASSL and includ
 2. Go to `Local Traffic > Profiles > Persistence`.
 3. Create a new secure persistence profile with persistence type equals to `Cookie`.
 4. Check the custom box for `Cookie Name` and enter a cookie name that does not conflict with any existing cookie names.
-5. Check the custom box for `Cookie Encryption Use Policy` and choose a `required` option. Enter a passphrase in `Encryption Passphrase` field.
+5. Check the custom box for `Cookie Encryption Use Policy` and choose the `required` option. Enter a passphrase in the `Encryption Passphrase` field.
 6. Click `Finished`.
-7. Assign created persistence profile to the virtual server.
+7. Assign the created persistence profile to the virtual server.
 
 ##### Configuring secure cookie persistence using TMSH
 
@@ -109,22 +108,22 @@ save /sys config
 
 #### Description
 
-An attacker can receive information that a web application is protected by BIG-IP system via HTTP `Server` header.  
-BIG-IP system uses different HTTP Profiles for managing HTTP traffic.
-In particular, BIG-IP system uses HTTP Profile that specifies the string used as the `Server` name in traffic generated by LTM.
+An attacker can get information that a web application is protected by BIG-IP system via HTTP `Server` header.  
+BIG-IP system uses different HTTP Profiles for managing HTTP traffic. In particular, BIG-IP system uses HTTP Profile that specifies the string used as the `Server` name in traffic generated by BIG-IP LTM.
 The default value is equal to `BigIP` or `BIG-IP` and depends on BIG-IP system version.
-An attacker can detect that BIG-IP is used in network infrustructure and then know role, type, and version of the BIG-IP system.
+An attacker can detect that BIG-IP system is used in network and then know a role, type, and version of the BIG-IP system.
 
 #### Testing
 
 1. Run intercepting proxy or traffic intercepting browser plug-in, trap all responses from a web application.
 2. If possible, log in to web application and inspect HTTP responses.
-3. If Server header contains `BIG-IP` or `BigIP` value then BIG-IP is used.
+3. Send requests using HTTP and HTTPS.  
+4. If HTTP Server header contains `BIG-IP` or `BigIP` value then BIG-IP is used.
 
 The following example shows a GET request to BIG-IP and a response containing Server header inserted by BIG-IP LTM.
  ```
  GET / HTTP/1.1
- Host: x.x.x.x
+ Host: example.com
  ```
  ```
  HTTP/1.0 302 Found
@@ -162,8 +161,7 @@ save /sys config
 ### Access to management interface from Internet
 
 #### Description
-An attacker can access to BIG-IP management interface via Internet.
-This is can lead to different attacks on BIG-IP administrative tools, unauthorized access or mass enumeration of BIG-IP systems via search engines. 
+If an attacker can access to BIG-IP management interface from Internet  this can lead to different attacks on BIG-IP administrative tools, unauthorized access or mass enumeration of BIG-IP systems using search engines. 
 The BIG-IP system uses the following [two network connection entry points] (https://support.f5.com/kb/en-us/solutions/public/7000/300/sol7312.html):
 * TMM switch interfaces
 * Management interface (MGMT)
@@ -171,7 +169,7 @@ The BIG-IP system uses the following [two network connection entry points] (http
 Either the TMM switch interfaces or the MGMT interface can provide administrative access to the BIG-IP system.
 The TMM switch interfaces are the interfaces that the BIG-IP system uses to send and receive load-balanced traffic.
 The MGMT interface is the interface to perform system management functions via browser-based or command line configuration tools.
-The MGMT interface is intended for administrative traffic and cannot be used for load-balanced traffic.
+The MGMT interface is intended for administrative traffic and can not be used for load-balanced traffic.
 It is recommended to connect MGMT interface to a secure, management-only network, such as one that uses an [RFC 1918] (https://tools.ietf.org/html/rfc1918) private IP address space.
 Otherwise an attacker can identify BIG-IP systems in your network and then [attack them](https://www.blackhat.com/html/webcast/07182013-hacking-appliances-ironic-exploits-in-security-products.html) via management plane.
 
@@ -193,7 +191,7 @@ Otherwise an attacker can identify BIG-IP systems in your network and then [atta
 #### Remediation
 
 Connect MGMT interface to special management network only. Management network should operates under private ([RFC 1918] (https://tools.ietf.org/html/rfc1918)) IP-address space that is completely separate from the production network.
- The most secure configuration is to set "Allow None" on all Self IPs and only administer a BIG-IP using the Management Port.
+The most secure configuration is to set "Allow None" on all Self IPs and only administer a BIG-IP using the Management Port.
 Setting "Allow None" on each Self IP will block all access to BIG-IP's administrative IP addresses except for the Management Port. Access to individual ports can be selectively enabled, but this is not recommended in a highly secure environment.
 
 To deny all connections on the self IP addresses using the Configuration utility
@@ -203,7 +201,7 @@ To deny all connections on the self IP addresses using the Configuration utility
 4. Click `Update`.
 
 If you need to administer BIG-IP using Self IPs you should also use private [RFC 1918] (https://tools.ietf.org/html/rfc1918) IP-address space.
-The most unsecure configuation is to use routable addresses on your Self-IPs. In this case it is highly recommended to lock down access to the networks that need it. To lock-down SSH and the GUI for a Self IP from a specific network.
+The most unsecure configuation is to use routable IP-addresses on your Self-IPs. In this case it is highly recommended to lock down access to the networks that need it. To lock-down SSH and the GUI for a Self IP from a specific network.
 For examle, to permit access from network 192.268.2.0/24 it is necessary to perform the following commands in TMSH:
  ```
 modify /sys sshd allow replace-all-with { 192.168.2.* }
@@ -228,9 +226,8 @@ This weakness can lead to vulnerabilities which can be used in [different attack
  
 #### Remediation
 
-BIG-IP systems can be protected against HTTP host header attacks using Centralized Policy Matching (CPM) feature of LTM module.
-Let's consider an example of configuration BIG-IP system with LTM and APM modules that illustrates the main idea of this protection.
-The following settings ensures that user will be redirected to `/vdesk/hangup.php3` script deleting a user's session if HTTP Host header contains a value different from permitted and correct hostnames.
+BIG-IP systems can be protected against HTTP host header attacks using Centralized Policy Matching (CPM) feature of LTM module or iRules. Let's consider an example of configuration BIG-IP system with LTM and APM modules using CPM that illustrates the main idea of this protection.
+The following settings ensures that user will be redirected to `/vdesk/hangup.php3` script deleting a user's session if HTTP `Host` header contains a value different from permitted and correct hostnames.
 
 ##### Configuring host validation in CPM using the Configuration utility
 
@@ -326,10 +323,10 @@ Change `<title>BIG-IP logout page</title>` to `<title>Logout page</title>`.
 
 #### Description
 
-An unauthenticated attacker can establish multiple connections with BigIP Access Policy Manager and exhaust all available sessions defined in customer's license.
-In the first step of BigIP APM protocol the client sends a HTTP request to virtual server with access profile (/).
-The BigIP system creates a new session, marks it as progress (pending), decreases the number of the available sessions by one, and then redirects client to access policy URI (/my.policy).
-Since BigIP allocates a new session after the first unauthenticated request and deletes the session only if an access policy timeout will be expired the attacker can exhaust all available sessions repeatedly sending initial HTTP request.
+An unauthenticated attacker can establish multiple connections with BIG-IP APM and exhaust all available sessions defined in customer's license.
+In the first step of BIG-IP APM protocol the client sends a HTTP request to virtual server with access profile (/).
+The BIG-IP APM creates a new session, marks it as progress (pending), decreases the number of the available sessions by one, and then redirects client to access policy URI (/my.policy).
+Since BIG-IP APM allocates a new session after the first unauthenticated request and deletes the session only if an access policy timeout will be expired the attacker can exhaust all available sessions repeatedly sending initial HTTP request.
 New versions of BigIP system has secure configuration by default and they are not vulnerable to this attack.
 
 #### Testing
@@ -363,10 +360,10 @@ save /sys config
 ### APM Brute-force Passwords Attack
  
 #### Description
-By default, BigIP APM with any type of AAA is vulnerable to brute-force password attack.
+By default, BIG-IP APM with any type of AAA is vulnerable to brute-force password attack.
 
 #### Remediation
-The `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options or CAPTCHA can be enabled to slow down or mitigate brute-force passwords attacks against BIG-IP APM
+The `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options or CAPTCHA can be enabled to slow down or mitigate brute-force passwords attacks against BIG-IP APM.
 
 To enable `Minimum Authentication Failure Delay` and `Maximum Authentication Failure Delay` options using the Configuration utility
 
@@ -385,7 +382,7 @@ To enable CAPTCHA using the Configuration utility
 
 ## Getting an A-grade on Qualys SSL Labs
 
-It is necessary to configure the following settings in BigIP's client SSL profile
+It is necessary to configure the following settings in BIG-IP's client SSL profile
 * Enable TLS_FALLBACK-SCSV extension
 * Enable HSTS
 * Prioritize PFS ciphers
