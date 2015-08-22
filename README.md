@@ -17,6 +17,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
   - [Enabling Strict Transport Security](#enabling-strict-transport-security)
   - [Prioritizing PFS ciphersuites](#prioritizing-pfs-ciphersuites)
 - [Securing Administrative Access](#securing-administrative-access)
+  - [SSH](#ssh) 
   - [Legal notification banner](#legal-notification-banner)
   - [Inactive administrative session timeout](#inactive-administrative-session-timeout)
   - [Connection Settings](#connection-settings)
@@ -444,9 +445,20 @@ ECDHE+AES-GCM:ECDHE+AES:DEFAULT:!DHE:!RC4:!MD5:!EXPORT:!LOW:!SSLv2
 ## Securing Administrative Access
 
 It is necessary to configure the following settings to secure administrative access to BIG-IP
+* SSH
 * Legal notification banner
 * Inactive administrative session timeout
 * Password policy for administrative user
+
+### SSH
+SSH is a protocol that provides secure remote access, remote command execution, and file transfer. It is possible to enable or SSH  accesss to management interface and restrict SSH access to trusted hosts or subnets.
+
+#### Configuring SSH access
+
+1. Log in to the Configuration utility.
+2. Go to `System > Platform`.
+3. For the setting labeled `SSH Access`, verify that the box is checked/unchecked according with your security policy.
+4. Restrict SSH access using the field labeled `SSH IP Allow` and adding an IP address or address range that must have SSH access to the system only.
 
 ### Legal Notification Banner
 
