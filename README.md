@@ -480,11 +480,11 @@ It is recommended that all sessions should be restricted using an idle or inacti
 4. For the setting labeled `Enforce Idle Timeout While Viewing The Dashboard`, verify that the box is checked.  In this case session timeout is enforced while dashboard is running.
 5. Click `Update`.
 
-### Connections Settings
+### Connection Settings
 
 It is recommended that all connections to GUI should be restricted by number and IP-address.
 
-#### Configuring connections settings
+#### Configuring connection settings
 
 1. Log in to the Configuration utility.
 2. Go to `System > Preferences`.
