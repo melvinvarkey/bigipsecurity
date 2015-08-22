@@ -457,15 +457,16 @@ It is recommended that a legal notification banner is presented on all interacti
 2. Go to `System > Preferences`.
 3. For the setting labeled `Show The Security Banner On The Login Screen`, verify that the box is checked. This ensures that security message you specify displays on the login screen of the BIG-IP Configuration utility.
 4. Add a banner according with your security policy. 
+5. Click `Update`
+
 Example of the [banner](http://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/Security/Baseline_Security/securebasebook/appendxA.html):
 
-```
+  ```
 UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
  You must have explicit, authorized permission to access or configure this device.
  Unauthorized attempts and actions to access or use this system may result in civil and/or criminal penalties.
  All activities performed on this device are logged and monitored.
-```
-5. Click `Update`.
+  ```
 
 ### Inactive Administrative Session Timeout
 
