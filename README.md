@@ -472,6 +472,13 @@ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
 
 It is recommended that all sessions should be restricted using an idle or inactivity timeout. This timeout defines the amount of time a session will remain active in case there is no activity in the session, closing and invalidating the session upon the defined idle period since the last HTTP request received by the web application for a given session.
 
+#### Configuring inactive administrative session timeout
+
+1. Log in to the Configuration utility.
+2. Go to `System > Preferences`.
+3. In the field labeled `Idle Time Before Automatic Logout`, revise the default value. It is recommended to use a value of 120 seconds.
+4. Click `Update`
+
 ### Password Policy for Administrative User
 
 It is recommended to require BIG-IP system users to create strong passwords and to specify the maximum number of BIG-IP Configuration utility login failures that the system allows before the user is denied access.
