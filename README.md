@@ -447,6 +447,10 @@ It is necessary to configure the following settings to secure administrative acc
 * Inactive administrative session timeout
 * Password policy for administrative user
 
+### Legal Notification Banner
+
+It is recommended that a legal notification banner is presented on all interactive sessions to ensure that users are notified of the security policy being enforced and to which they are subject.
+
 #### Configuring legal notification banner
 
 1. Log in to the Configuration utility.
@@ -463,6 +467,14 @@ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
 ```
 5. Click `Update`.
 
+### Inactive Administrative Session Timeout
+
+It is recommended that all sessions should be restricted using an idle or inactivity timeout. This timeout defines the amount of time a session will remain active in case there is no activity in the session, closing and invalidating the session upon the defined idle period since the last HTTP request received by the web application for a given session.
+
+### Password Policy for Administrative User
+
+It is recommended to require BIG-IP system users to create strong passwords and to specify the maximum number of BIG-IP Configuration utility login failures that the system allows before the user is denied access.
+
 #### Configuring a password policy for administrative users
 1. Log in to the Configuration utility.
 2. Go to `System > Users`. Click `Authentication`.
@@ -470,8 +482,6 @@ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
 4. For the `Minimum Length` and `Required Characters` settings, configure the default values, according to your organization's internal security requirements.
 5. In the `Maximum Login Failures` field, specify a number. If the user fails to log in the specified number of times, the user is locked out of the system. Therefore, F5 Networks recommends that you specify a value that allows for a reasonable number of login failures before user lockout.
 6. Click `Update`.
-
-
 
 ## References
 * [F5 Networks Official Site] (https://f5.com/products/big-ip)
