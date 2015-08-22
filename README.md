@@ -19,6 +19,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
 - [Securing Administrative Access](#securing-administrative-access)
   - [Legal notification banner](#legal-notification-banner)
   - [Inactive administrative session timeout](#inactive-administrative-session-timeout)
+  - [Connection Settings](#connection-settings)
   - [Password policy for administrative user](#password-policy-for-administrative-user)
  
 ## Summary
@@ -476,7 +477,21 @@ It is recommended that all sessions should be restricted using an idle or inacti
 1. Log in to the Configuration utility.
 2. Go to `System > Preferences`.
 3. In the field labeled `Idle Time Before Automatic Logout`, revise the default value. It is recommended to use a value of 120 seconds.
-4. Click `Update`
+4. For the setting labeled `Enforce Idle Timeout While Viewing The Dashboard`, verify that the box is checked.  In this case session timeout is enforced while dashboard is running.
+5. Click `Update`.
+
+### Connections Settings
+
+It is recommended that all connections to GUI should be restricted by number and IP-address.
+
+#### Configuring connections settings
+
+1. Log in to the Configuration utility.
+2. Go to `System > Preferences`.
+3. For the setting labeled `Require A Consistent Inbound IP For the Entire Web Session `, verify that the box is checked.
+4. In the `System Settings` choose `Advanced`.
+5. In the field labeled `Maximum HTTP Connections To Configuration Utility `, revise the default value. It is recommended to use a value of 10 seconds.
+6. Click `Update`.
 
 ### Password Policy for Administrative User
 
