@@ -13,6 +13,13 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
   - [APM Brute-force Passwords Attack](#apm-brute-force-passwords-attack)
 - [Getting an A-grade on Qualys SSL Labs](#getting-an-a-grade-on-qualys-ssl-labs)
+  - [Enabling TLS Fallback SCSV extension](#enabling-tls-fallback-scsv-extension)
+  - [Enabling Strict Transport Security](#enabling-strict-transport-security)
+  - [Prioritizing PFS ciphers](#prioritizing-pfs-ciphers)
+- [Securing Administrative Access](#securing-administrative-access)
+  - [Legal notification banner](#legal-notification-banner)
+  - [Inactive administrative session timeout](#inactive-administrative-session-timeout)
+  - [Password policy for administrative user](#password-policy-for-administrative-user)
  
 ## Summary
 The BIG-IP family of products offers the application intelligence network managers need to ensure applications are fast, secure and available.
@@ -384,9 +391,12 @@ To enable CAPTCHA using the Configuration utility
 ## Getting an A-grade on Qualys SSL Labs
 
 It is necessary to configure the following settings in BIG-IP's client SSL profile
-* Enable TLS_FALLBACK-SCSV extension
-* Enable HSTS
-* Prioritize PFS ciphers
+* TLS_FALLBACK_SCSV extension
+* HTTP Strict Transport Security
+* PFS ciphers
+
+### Enabling TLS Fallback SCSV extension
+All modern and updated BIG-IP systems support this extension by default.
 
 ### Enabling Strict Transport Security
 There are several ways for implementing HSTS on BigIP: HTTP profile and iRules.
@@ -429,6 +439,39 @@ ECDHE+AES-GCM:ECDHE+AES:DEFAULT:!DHE:!RC4:!MD5:!EXPORT:!LOW:!SSLv2
 3. Choose the existent or create a new cleint SSL profile.
 4. Choose `Advanced` configuration mode. Input your cipher string in the `Cipher` option.
 5. Click `Update`.
+
+## Securing Administrative Access
+
+It is necessary to configure the following settings to secure administrative access to BIG-IP
+* Legal notification banner
+* Inactive administrative session timeout
+* Password policy for administrative user
+
+#### Configuring legal notification banner
+
+1. Log in to the Configuration utility.
+2. Go to `System > Preferences`.
+3. For the setting labeled `Show The Security Banner On The Login Screen`, verify that the box is checked. This ensures that security message you specify displays on the login screen of the BIG-IP Configuration utility.
+4. Add a banner according with your security policy. 
+Example of the [banner](http://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/Security/Baseline_Security/securebasebook/appendxA.html):
+
+```
+UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+ You must have explicit, authorized permission to access or configure this device.
+ Unauthorized attempts and actions to access or use this system may result in civil and/or criminal penalties.
+ All activities performed on this device are logged and monitored.
+```
+5. Click `Update`.
+
+#### Configuring a password policy for administrative users
+1. Log in to the Configuration utility.
+2. Go to `System > Users`. Click `Authentication`.
+3. From the `Secure Password Enforcement` list, select `Enabled`. Additional settings appear on the screen.
+4. For the `Minimum Length` and `Required Characters` settings, configure the default values, according to your organization's internal security requirements.
+5. In the `Maximum Login Failures` field, specify a number. If the user fails to log in the specified number of times, the user is locked out of the system. Therefore, F5 Networks recommends that you specify a value that allows for a reasonable number of login failures before user lockout.
+6. Click `Update`.
+
+
 
 ## References
 * [F5 Networks Official Site] (https://f5.com/products/big-ip)
