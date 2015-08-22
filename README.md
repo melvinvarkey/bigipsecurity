@@ -15,7 +15,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
 - [Getting an A-grade on Qualys SSL Labs](#getting-an-a-grade-on-qualys-ssl-labs)
   - [Enabling TLS Fallback SCSV extension](#enabling-tls-fallback-scsv-extension)
   - [Enabling Strict Transport Security](#enabling-strict-transport-security)
-  - [Prioritizing PFS ciphers](#prioritizing-pfs-ciphers)
+  - [Prioritizing PFS ciphersuites](#prioritizing-pfs-ciphersuites)
 - [Securing Administrative Access](#securing-administrative-access)
   - [Legal notification banner](#legal-notification-banner)
   - [Inactive administrative session timeout](#inactive-administrative-session-timeout)
@@ -424,7 +424,7 @@ when HTTP_RESPONSE {
  ```
 4. Assign the iRule to the HTTPS virtual server.
 
-### Configuring ciphersuites
+### Prioritizing PFS ciphersuites
 
 There are many different cipher strings that prioritize PFS ciphers and can provide forward secrecy. On of them is the following:
 
