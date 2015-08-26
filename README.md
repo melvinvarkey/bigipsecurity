@@ -16,6 +16,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
   - [Enabling TLS Fallback SCSV extension](#enabling-tls-fallback-scsv-extension)
   - [Enabling Strict Transport Security](#enabling-strict-transport-security)
   - [Prioritizing PFS ciphersuites](#prioritizing-pfs-ciphersuites)
+  - [Disabling SSLv3 on management interface](#disabling-sslv3-on-management-interface)
 - [Securing Administrative Access](#securing-administrative-access)
   - [SSH](#ssh) 
   - [Legal notification banner](#legal-notification-banner)
@@ -441,6 +442,15 @@ ECDHE+AES-GCM:ECDHE+AES:DEFAULT:!DHE:!RC4:!MD5:!EXPORT:!LOW:!SSLv2
 3. Choose the existent or create a new cleint SSL profile.
 4. Choose `Advanced` configuration mode. Input your cipher string in the `Cipher` option.
 5. Click `Update`.
+
+### Disabling SSLv3 on Management Interface
+
+By default, SSLv3 protocol is enabled on BIG-IP management interface.
+
+#### Disabling SSLv3 using TMSH
+```
+tmsh modify /sys httpd ssl-protocol "all -SSLv2 -SSLv3"
+```
 
 ## Securing Administrative Access
 
