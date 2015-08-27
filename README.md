@@ -7,7 +7,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
 - [Common Misconfigurations](#common-misconfigurations)
   - [Persistence Cookie Information Leakage](#persistence-cookie-information-leakage)
   - [HTTP Server Header Information Leakage](#http-server-header-information-leakage)
-  - [Access to management intarface from Internet](#access-to-management-interface-from-internet)
+  - [Access to management interface from Internet](#access-to-management-interface-from-internet)
   - [HTTP host header attacks](#http-host-header-attacks)
   - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
