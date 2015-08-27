@@ -8,7 +8,7 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
   - [Persistence Cookie Information Leakage](#persistence-cookie-information-leakage)
   - [HTTP Server Header Information Leakage](#http-server-header-information-leakage)
   - [Access to management interface from Internet](#access-to-management-interface-from-internet)
-  - [HTTP host header attacks](#http-host-header-attacks)
+  - [HTTP host header insufficient validation](#http-host-header-insufficient-validation)
   - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
   - [APM Brute-force Passwords Attack](#apm-brute-force-passwords-attack)
@@ -220,7 +220,7 @@ modify /sys httpd allow replace-all-with { 192.168.2.* }
 save /sys config
  ```
 
-### HTTP Host Header Attacks
+### HTTP Host Header Insufficient Validation
 
 #### Description
 
