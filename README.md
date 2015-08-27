@@ -7,11 +7,11 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
 - [Common Misconfigurations](#common-misconfigurations)
   - [Persistence Cookie Information Leakage](#persistence-cookie-information-leakage)
   - [HTTP Server Header Information Leakage](#http-server-header-information-leakage)
-  - [Access to management interface from Internet](#access-to-management-interface-from-internet)
-  - [HTTP host header insufficient validation](#http-host-header-insufficient-validation)
-  - [Mass enumeration using search engines](#mass-enumeration-using-search-engines)
+  - [Access to Management Interface from Internet](#access-to-management-interface-from-internet)
+  - [HTTP Host Header Insufficient Validation](#http-host-header-insufficient-validation)
+  - [Mass Enumeration using Search Engines](#mass-enumeration-using-search-engines)
   - [APM Session Exhaustion DoS attack](#apm-session-exhaustion-dos-attack)
-  - [APM Brute-force Passwords Attack](#apm-brute-force-passwords-attack)
+  - [APM Brute Force Passwords Attack](#apm-brute-force-passwords-attack)
 - [Getting an A-grade on Qualys SSL Labs](#getting-an-a-grade-on-qualys-ssl-labs)
   - [Enabling TLS Fallback SCSV extension](#enabling-tls-fallback-scsv-extension)
   - [Enabling Strict Transport Security](#enabling-strict-transport-security)
@@ -19,10 +19,10 @@ This document describes common misconfigurations of F5 Networks BIG-IP systems a
   - [Disabling SSLv3 on management interface](#disabling-sslv3-on-management-interface)
 - [Securing Administrative Access](#securing-administrative-access)
   - [SSH](#ssh) 
-  - [Legal notification banner](#legal-notification-banner)
-  - [Inactive administrative session timeout](#inactive-administrative-session-timeout)
+  - [Legal Notification Banner](#legal-notification-banner)
+  - [Inactive Administrative Session Timeout](#inactive-administrative-session-timeout)
   - [Connection Settings](#connection-settings)
-  - [Password policy for administrative user](#password-policy-for-administrative-user)
+  - [Password Policy for Administrative Users](#password-policy-for-administrative-user)
  
 ## Summary
 The BIG-IP family of products offers the application intelligence network managers need to ensure applications are fast, secure and available.
@@ -368,7 +368,7 @@ modify /apm profile access <profile_name> generation-action increment
 save /sys config
  ```
  
-### APM Brute-force Passwords Attack
+### APM Brute Force Passwords Attack
  
 #### Description
 By default, BIG-IP APM with any type of AAA is vulnerable to brute-force password attack.
@@ -515,9 +515,9 @@ It is recommended that all connections to GUI should be restricted by number and
 5. In the field labeled `Maximum HTTP Connections To Configuration Utility `, revise the default value. It is recommended to use a value of 10 seconds.
 6. Click `Update`.
 
-### Password Policy for Administrative User
+### Password Policy for Administrative Users
 
-It is recommended to require BIG-IP system users to create strong passwords and to specify the maximum number of BIG-IP Configuration utility login failures that the system allows before the user is denied access.
+It is recommended to require BIG-IP system users to create strong passwords and to specify the maximum number of BIG-IP Configuration utility login failures that the system allows before the user is denied access. Password policy can not be assigned to users with `Administrator` role or to `root` user. 
 
 #### Configuring a password policy for administrative users
 1. Log in to the Configuration utility.
