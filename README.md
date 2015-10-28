@@ -429,7 +429,7 @@ when HTTP_RESPONSE {
 
 ### Prioritizing PFS ciphersuites
 
-There are many different cipher strings that prioritize PFS ciphers and can provide forward secrecy. On of them is the following:
+There are many different cipher strings that prioritize PFS ciphers and can provide forward secrecy. One of them is the following:
 
 ```
 ECDHE+AES-GCM:ECDHE+AES:DEFAULT:!DHE:!RC4:!MD5:!EXPORT:!LOW:!SSLv2
