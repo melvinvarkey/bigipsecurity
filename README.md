@@ -226,7 +226,7 @@ save /sys config
 
 Host header in HTTP requests is not always validated by BIG-IP systems by default.
 This validation depends on enabled modules, features and their configuration: for example, BIG-IP system in APM portal access mode performs a base sanitization of HTTP host header against XSS attacks.
-In most cases BIG-IP systems handle HTTP request with arbitrary `Host` header.
+In most cases BIG-IP systems process HTTP requests with arbitrary `Host` header.
 This weakness can lead to vulnerabilities which can be used in [different attacks based on HTTP Host header] (http://www.acunetix.com/blog/articles/automated-detection-of-host-header-attacks). For example, [DNS Rebinding] (http://www.ptsecurity.com/download/DNS-rebinding.pdf), [XSS](https://www.mehmetince.net/concrete5-reflected-xss-vulnerability-via-http-header-host-parameter), [password reset poisoning] (http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.htm), etc.  
 
 #### Tesing
